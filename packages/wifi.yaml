@@ -1,0 +1,7 @@
+# https://esphome.io/components/wifi.html#wifi-component
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_pass
+  ap:
+    password: !secret ap_pass
+  fast_connect: true

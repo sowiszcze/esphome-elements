@@ -1,0 +1,16 @@
+substitutions:
+  mqtt_topic_prefix: esphome/${device_name}
+
+esphome:
+  name: ${device_name}
+
+packages:
+  wifi: !include packages/wifi.yaml
+  web_server: !include packages/web_server.yaml
+  api: !include packages/api.yaml
+  mqtt: !include packages/mqtt.yaml
+  ota: !include packages/ota.yaml
+
+<<: !include settings.yaml
+
+captive_portal:

@@ -1,0 +1,14 @@
+# You can put your own shared settings in this file
+# It can as well be empty, so you are free to just rename it
+
+wifi:
+  manual_ip:
+    static_ip: #
+    gateway: #
+    subnet: #
+    dns1: #
+    dns2: #
+  domain: #
+
+logger:
+  baud_rate: 0

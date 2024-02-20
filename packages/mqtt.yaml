@@ -1,0 +1,15 @@
+mqtt:
+  broker: !secret mqtt_addr
+  username: !secret mqtt_user
+  password: !secret mqtt_pass
+  topic_prefix: null
+  log_topic:
+    level: WARN
+    topic: ${mqtt_topic_prefix}/log
+  birth_message:
+    topic: ${mqtt_topic_prefix}/status
+  will_message:
+    topic: ${mqtt_topic_prefix}/status
+  shutdown_message:
+    topic: ${mqtt_topic_prefix}/status
+  reboot_timeout: 0s

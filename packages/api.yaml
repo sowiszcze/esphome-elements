@@ -1,0 +1,4 @@
+api:
+  password: !secret api_pass
+  encryption:
+    key: !secret encryption_key
