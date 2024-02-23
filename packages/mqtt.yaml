@@ -8,8 +8,11 @@ mqtt:
     topic: ${mqtt_topic_prefix}/log
   birth_message:
     topic: ${mqtt_topic_prefix}/status
+    payload: online
   will_message:
     topic: ${mqtt_topic_prefix}/status
+    payload: offline
   shutdown_message:
     topic: ${mqtt_topic_prefix}/status
+    payload: shutdown
   reboot_timeout: 0s

@@ -1,0 +1,17 @@
+binary_sensor:
+  - platform: gpio
+    pin:
+      number: ${touchpad_pin}
+      mode:
+        input: true
+        pullup: true
+      inverted: true
+    name: Touchpad ${button_num}
+    on_press:
+      - switch.toggle: relay_${button_num}
+
+switch:
+  - platform: gpio
+    name: Relay ${button_num}
+    pin: ${relay_pin}
+    id: relay_${button_num}

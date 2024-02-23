@@ -1,9 +1,6 @@
 substitutions:
   mqtt_topic_prefix: esphome/${device_name}
 
-esphome:
-  name: ${device_name}
-
 packages:
   wifi: !include packages/wifi.yaml
   web_server: !include packages/web_server.yaml
@@ -14,3 +11,35 @@ packages:
 <<: !include settings.yaml
 
 captive_portal:
+
+sensor:
+  - platform: wifi_signal
+    name: "${device_name} WiFi Signal"
+    update_interval: 60s
+    accuracy_decimals: 0
+    disabled_by_default: true
+  - platform: uptime
+    name: "${device_name} Uptime"
+    unit_of_measurement: days
+    update_interval: 300s
+    accuracy_decimals: 1
+    disabled_by_default: true
+    filters:
+      - multiply: 0.000011574
+
+switch:
+  - platform: restart
+    name: Restart
+
+binary_sensor:
+  - platform: status
+    name: Status
+
+text_sensor:
+  - platform: version
+    name: "${device_name} ESPHome Version"
+  - platform: wifi_info
+    ip_address:
+      name: "${device_name} IP"
+    ssid:
+      name: "${device_name} SSID"

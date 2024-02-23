@@ -1,0 +1,4 @@
+# Sets time from Homeassistant
+time:
+  - platform: homeassistant
+    id: homeassistant_time

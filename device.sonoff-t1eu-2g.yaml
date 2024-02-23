@@ -1,0 +1,14 @@
+packages:
+  base: !include device.sonoff-t1eu-base.yaml
+  switch_01: !inculde
+    file: components/sonoff-t1eu.button.yaml
+    vars:
+      touchpad_pin: GPIO0
+      relay_pin: GPIO12
+      button_num: 1
+  switch_02: !inculde
+    file: components/sonoff-t1eu.button.yaml
+    vars:
+      touchpad_pin: GPIO9
+      relay_pin: GPIO5
+      button_num: 2
