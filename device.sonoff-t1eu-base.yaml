@@ -1,7 +1,5 @@
 esphome:
   name: ${device_name}
-  platform: ESP8266
-  board: esp01_1m
   friendly_name: ${friendly_name}
   area: ${area}
   on_boot:
@@ -17,15 +15,14 @@ packages:
   logger_off: !include settings.uart-logger-off.yaml
 
 output:
-  # Register the blue LED as a dimmable output ....
+  # Register the blue LED as a dimmable output....
   - platform: esp8266_pwm
     id: blue_led
     pin: GPIO13
-    internal: true
     inverted: true
 
 light:
-  # ... and then make a light out of it.
+  # ...and then make a light out of it.
   - platform: monochromatic
     id: blue_led_light
     name: Status LED
