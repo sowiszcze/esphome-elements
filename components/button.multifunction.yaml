@@ -1,0 +1,19 @@
+# Button configuration
+binary_sensor:
+  - platform: gpio
+    name: Toggle Button
+    id: toggle_button
+    entity_category: diagnostic
+    pin:
+      number: ${button_pin}
+      inverted: true
+    on_click:
+      # Short press toggles the relay
+      - max_length: 3500ms
+        then:
+          - switch.toggle: ${relay_id}
+      # Long press (>3.5s) restarts the device
+      - min_length: 3500ms
+        max_length: 15000ms
+        then:
+          - button.press: restart_button

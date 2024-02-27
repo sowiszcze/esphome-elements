@@ -2,10 +2,6 @@ esphome:
   name: ${device_name}
   friendly_name: ${friendly_name}
   area: ${area}
-  on_boot:
-    priority: -10
-    then:
-      - light.turn_on: blue_light
 
 esp8266:
   board: esp01_1m
@@ -13,47 +9,37 @@ esp8266:
 packages:
   base: !include device.base.yaml
   logger_off: !include settings.uart-logger-off.yaml
+  status_led: !include
+    file: components/pwm.status-led.yaml
+    vars:
+      led_pin: GPIO13
+      control_id: status_led_light
+  night_mode: !include
+    file: components/template.night-mode.yaml
+    vars:
+      control_id: status_led_light
+      off_value: 20%
+      on_value: 100%
+  multifunction_button: !include
+    file: components/button.multifunction.yaml
+    vars:
+      button_pin: GPIO00
+      relay_id: relay
 
 binary_sensor:
-  - platform: gpio
-    pin: GPIO00
-    id: button_toggle
-    internal: true
-    filters:
-      - invert:
-      - delayed_off: 10ms
-    on_press:
-      - switch.toggle:
-          id: relay_1
   - platform: gpio
     name: Switch
     pin: GPIO04
     id: switch_input
-    on_press:
+    entity_category: diagnostic
+    on_state:
       then:
         - switch.toggle:
-            id: relay_1
-    on_release:
-      then:
-        - switch.toggle:
-            id: relay_1
+            id: relay
 
 switch:
   - platform: gpio
     name: Relay
     pin: GPIO12
-    id: relay_1
+    id: relay
     restore_mode: RESTORE_DEFAULT_OFF
-
-output:
-  - platform: esp8266_pwm
-    id: blue_led
-    pin: GPIO13
-    inverted: true
-
-light:
-  - platform: monochromatic
-    id: blue_light
-    name: Blue LED
-    output: blue_led
-    internal: true

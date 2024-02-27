@@ -1,0 +1,91 @@
+esphome:
+  name: ${device_name}
+  friendly_name: ${friendly_name}
+  area: ${area}
+
+esp8266:
+  board: esp8285
+
+packages:
+  base: !include device.base.yaml
+  logger_off: !include settings.uart-logger-off.yaml
+  hass_time: !include components/general.hass-time.yaml
+  multifunction_button: !include
+    file: components/button.multifunction.yaml
+    vars:
+      button_pin: ${button_pin}
+      relay_id: relay
+
+# Setup of LED's used in displaying relay status
+output:
+  - platform: gpio
+    pin: ${red_led}
+    inverted: true
+    id: indicator_led
+
+# Config for the relay
+switch:
+  - platform: gpio
+    pin: ${relay_pin}
+    restore_mode: RESTORE_DEFAULT_ON
+    id: relay
+    name: Relay
+    device_class: outlet
+    on_turn_on:
+      - output.turn_on: indicator_led
+    on_turn_off:
+      - output.turn_off: indicator_led
+
+# Status LED for connection
+status_led:
+  pin:
+    number: ${blue_led}
+    inverted: true
+
+# Sensors for Voltage (V), Current (A), Power (W), Daily energy usage (kWh)
+sensor:
+  - platform: hlw8012
+    id: power_meter
+    sel_pin:
+      number: ${sel_pin}
+      inverted: true
+    cf_pin: ${cf_pin}
+    cf1_pin: ${cf1_pin}
+    current_resistor: ${current_res}
+    voltage_divider: ${voltage_div}
+    change_mode_every: 3
+    update_interval: 3s
+    current:
+      name: Current
+      id: current
+      device_class: current
+      accuracy_decimals: 3
+    voltage:
+      name: Voltage
+      id: voltage
+      device_class: voltage
+      accuracy_decimals: 1
+    energy:
+      name: Energy
+      device_class: energy
+    power:
+      name: Power
+      id: power
+      device_class: power
+      accuracy_decimals: 0
+      on_value_range:
+          above: ${max_power}
+          then:
+            - output.turn_off: indicator_led
+            - switch.turn_off: relay
+            - logger.log:
+                format: Safety trigger fired for ${device_name}! Power exceeded the maximum of ${max_power}W.
+                level: ERROR
+  - platform: total_daily_energy
+    name: Daily Energy
+    id: daily_energy
+    power_id: power
+    device_class: power
+    accuracy_decimals: 5
+    filters:
+      - multiply: 0.001

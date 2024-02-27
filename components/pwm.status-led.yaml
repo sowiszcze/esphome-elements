@@ -1,0 +1,14 @@
+output:
+  # Register the blue LED as a dimmable output...
+  - platform: esp8266_pwm
+    id: pwm_status_led
+    pin: ${led_pin}
+    inverted: true
+
+light:
+  # ...and then make a light out of it.
+  - platform: status_led
+    id: ${control_id}
+    name: Status LED
+    output: pwm_status_led
+    entity_category: diagnostic

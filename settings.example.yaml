@@ -1,14 +1,14 @@
-# You can put your own shared settings in this file
-# It can as well be empty, so you are free to just rename it
+# A sample settings file.
+#
+# You can copy this file as settings.yaml and use your own values.
+# Alternatively settings.yaml can be empty. The only requirement is for it to
+# exist.
 
 wifi:
   manual_ip:
-    static_ip: #
-    gateway: #
-    subnet: #
-    dns1: #
-    dns2: #
-  domain: #
-
-logger:
-  baud_rate: 0
+    static_ip: 192.168.1.${device_id}
+    gateway: 192.168.1.1
+    subnet: 255.255.255.0
+    dns1: 1.1.1.1
+    dns2: 9.9.9.9
+  domain: ".local"

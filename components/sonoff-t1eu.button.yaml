@@ -1,17 +1,19 @@
 binary_sensor:
   - platform: gpio
+    name: Touchpad ${button_uid}
+    id: touchpad_${button_uid}
+    entity_category: diagnostic
     pin:
       number: ${touchpad_pin}
       mode:
         input: true
         pullup: true
       inverted: true
-    name: Touchpad ${button_num}
     on_press:
-      - switch.toggle: relay_${button_num}
+      - switch.toggle: relay_${button_uid}
 
 switch:
   - platform: gpio
-    name: Relay ${button_num}
+    name: Relay ${button_uid}
+    id: relay_${button_uid}
     pin: ${relay_pin}
-    id: relay_${button_num}

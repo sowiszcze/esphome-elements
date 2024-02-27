@@ -1,0 +1,16 @@
+switch:
+  # Creates `Night Mode` switch which disables Status LED
+  - platform: template
+    name: Night Mode
+    turn_on_action:
+      then:
+        - light.control:
+            id: ${control_id}
+            brightness: ${off_value}
+            transition_length: 300ms
+    on_turn_off:
+      then:
+        - light.control:
+            id: ${control_id}
+            brightness: ${on_value}
+            transition_length: 300ms

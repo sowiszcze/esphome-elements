@@ -4,6 +4,7 @@ substitutions:
 packages:
   wifi: !include packages/wifi.yaml
   web_server: !include packages/web_server.yaml
+  prometheus: !include packages/prometheus.yaml
   api: !include packages/api.yaml
   mqtt: !include packages/mqtt.yaml
   ota: !include packages/ota.yaml
@@ -17,29 +18,36 @@ sensor:
     name: "${device_name} WiFi Signal"
     update_interval: 60s
     accuracy_decimals: 0
-    disabled_by_default: true
+    entity_category: diagnostic
   - platform: uptime
     name: "${device_name} Uptime"
     unit_of_measurement: days
     update_interval: 300s
     accuracy_decimals: 1
-    disabled_by_default: true
+    entity_category: diagnostic
     filters:
       - multiply: 0.000011574
 
-switch:
+button:
   - platform: restart
     name: Restart
+    id: restart_button
+    entity_category: config
+    device_class: restart
 
 binary_sensor:
   - platform: status
     name: Status
+    entity_category: diagnostic
 
 text_sensor:
   - platform: version
     name: "${device_name} ESPHome Version"
+    entity_category: diagnostic
   - platform: wifi_info
     ip_address:
       name: "${device_name} IP"
+      entity_category: diagnostic
     ssid:
       name: "${device_name} SSID"
+      entity_category: diagnostic
