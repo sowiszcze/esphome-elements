@@ -8,6 +8,30 @@ packages:
   api: !include packages/api.yaml
   mqtt: !include packages/mqtt.yaml
   ota: !include packages/ota.yaml
+  button_restart: !include
+    file: components/general.config-button.yaml
+    vars:
+      platform: restart
+      name: Restart
+      class: restart
+  button_safe_mode: !include
+    file: components/general.config-button.yaml
+    vars:
+      platform: safe_mode
+      name: Restart in Safe Mode
+      class: restart
+  button_restart: !include
+    file: components/general.config-button.yaml
+    vars:
+      platform: shutdown
+      name: Shutdown
+      class: default
+  button_factory_reset: !include
+    file: components/general.config-button.yaml
+    vars:
+      platform: factory_reset
+      name: Restart with Factory Defaults
+      class: restart
 
 <<: !include settings.yaml
 
@@ -29,11 +53,8 @@ sensor:
       - multiply: 0.000011574
 
 button:
-  - platform: restart
-    name: Restart
-    id: restart_button
-    entity_category: config
-    device_class: restart
+  - id: !extend factory_reset_button
+    disabled_by_default: true
 
 binary_sensor:
   - platform: status

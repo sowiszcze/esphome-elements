@@ -1,0 +1,6 @@
+button:
+  - platform: ${platform}
+    name: ${name}
+    id: ${platform}_button
+    entity_category: config
+    device_class: ${class}
