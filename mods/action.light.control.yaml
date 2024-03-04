@@ -1,0 +1,4 @@
+light.control:
+  id: ${control_id}
+  brightness: ${value}
+  transition_length: 300ms

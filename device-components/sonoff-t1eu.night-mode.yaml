@@ -1,0 +1,20 @@
+packages:
+  night_mode: ../components/template.night-mode.yaml
+
+switch:
+  # Make `Night Mode` dim status LED
+  - id: !extend night_mode
+    turn_on_action:
+      then:
+        - <<: !include
+            file: ../mods/action.light.control.yaml
+            vars:
+              control_id: ${control_id}
+              value: 20%
+    on_turn_off:
+      then:
+        - <<: !include
+            file: ../mods/action.light.control.yaml
+            vars:
+              control_id: ${control_id}
+              value: 100%

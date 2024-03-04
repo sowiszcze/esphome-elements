@@ -5,21 +5,16 @@ esphome:
 
 esp8266:
   board: esp01_1m
+  restore_from_flash: true
 
 packages:
   base: !include device.base.yaml
-  logger_off: !include settings.uart-logger-off.yaml
+  logger_off: !include components/logger.disabled-uart.yaml
   status_led: !include
-    file: components/pwm.status-led.yaml
+    file: components/esp8266-pwm.status-led.yaml
     vars:
       led_pin: GPIO13
       control_id: status_led_light
-  night_mode: !include
-    file: components/template.night-mode.yaml
-    vars:
-      control_id: status_led_light
-      off_value: 20%
-      on_value: 100%
   multifunction_button: !include
     file: components/button.multifunction.yaml
     vars:

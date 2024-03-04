@@ -2,21 +2,21 @@ esphome:
   name: ${device_name}
   friendly_name: ${friendly_name}
   area: ${area}
+  min_version: 2023.11.0
+  comment: ESPHome software for Sonoff t1EU wall switches
+  project:
+    name: "sowitech.sonoff_t1eu"
+    version: "1.0"
 
 esp8266:
   board: esp01_1m
+  restore_from_flash: true
 
 packages:
   base: !include device.base.yaml
-  logger_off: !include settings.uart-logger-off.yaml
+  logger_off: !include components/logger.disabled-uart.yaml
   status_led: !include
-    file: components/pwm.status-led.yaml
+    file: components/esp8266-pwm.status-led.yaml
     vars:
       led_pin: GPIO13
       control_id: status_led_light
-  night_mode: !include
-    file: components/template.night-mode.yaml
-    vars:
-      control_id: status_led_light
-      off_value: 20%
-      on_value: 100%
