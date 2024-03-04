@@ -72,3 +72,18 @@ text_sensor:
     ssid:
       name: "${device_name} SSID"
       entity_category: diagnostic
+    bssid:
+      name: "${device_name} BSSID"
+      entity_category: diagnostic
+      disabled_by_default: true
+    mac_address:
+      name: "${device_name} MAC Address"
+      entity_category: diagnostic
+    scan_results:
+      name: "${device_name} Scan Results"
+      entity_category: diagnostic
+      disabled_by_default: true
+    dns_address:
+      name: "${device_name} DNS Address"
+      entity_category: diagnostic
+      disabled_by_default: true

@@ -1,0 +1,27 @@
+debug:
+  update_interval: 5s
+
+text_sensor:
+  - platform: debug
+    device_class: diagnostic
+    device:
+      name: "Device Info"
+    reset_reason:
+      name: "Reset Reason"
+
+sensor:
+  - platform: debug
+    device_class: diagnostic
+    free:
+      name: "Heap Free"
+    fragmentation:
+      name: "Heap Fragmentation"
+    block:
+      name: "Heap Max Block"
+    loop_time:
+      name: "Loop Time"
+    psram:
+      name: "Free PSRAM"
+
+logger:
+  level: debug
