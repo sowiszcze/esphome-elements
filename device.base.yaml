@@ -20,12 +20,12 @@ packages:
       platform: safe_mode
       name: Restart in Safe Mode
       class: restart
-  button_restart: !include
+  button_shutdown: !include
     file: components/general.config-button.yaml
     vars:
       platform: shutdown
       name: Shutdown
-      class: default
+      class: ""
   button_factory_reset: !include
     file: components/general.config-button.yaml
     vars:
