@@ -1,8 +1,4 @@
 esphome:
-  name: ${device_name}
-  friendly_name: ${friendly_name}
-  area: ${area}
-  min_version: 2023.11.0
   comment: ESPHome software for Sonoff t1EU wall switches
   project:
     name: "sowitech.sonoff_t1eu"
@@ -13,7 +9,7 @@ esp8266:
   restore_from_flash: true
 
 packages:
-  base: !include device.base.yaml
+  base: !include device.base.min.yaml
   logger_off: !include components/logger.disabled-uart.yaml
   status_led: !include
     file: components/esp8266-pwm.status-led.yaml

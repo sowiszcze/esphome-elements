@@ -1,8 +1,4 @@
 esphome:
-  name: ${device_name}
-  friendly_name: ${friendly_name}
-  area: ${area}
-  min_version: 2023.11.0
   comment: ESPHome software for Sonoff Mini R2 relays
   project:
     name: "sowitech.sonoff_minir2"

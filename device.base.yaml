@@ -1,66 +1,15 @@
-esphome:
-  name: ${device_name}
-  friendly_name: ${friendly_name}
-  area: ${area}
-  min_version: 2023.11.0
-
-substitutions:
-  mqtt_topic_prefix: esphome/${device_name}
-
 packages:
-  wifi: !include packages/wifi.yaml
-  web_server: !include packages/web_server.yaml
-  prometheus: !include packages/prometheus.yaml
-  api: !include packages/api.yaml
-  mqtt: !include packages/mqtt.yaml
-  ota: !include packages/ota.yaml
-  button_restart: !include
-    file: components/general.config-button.yaml
+  base_min: !include device.base.min.yaml
+  mqtt: !include
+    file: packages/mqtt.yaml
     vars:
-      platform: restart
-      name: Restart
-      class: restart
-  button_safe_mode: !include
-    file: components/general.config-button.yaml
-    vars:
-      platform: safe_mode
-      name: Restart in Safe Mode
-      class: restart
+      mqtt_topic_prefix: esphome/${device_name}
   button_shutdown: !include
     file: components/general.config-button.yaml
     vars:
       platform: shutdown
       name: Shutdown
       class: ""
-  button_factory_reset: !include
-    file: components/general.config-button.yaml
-    vars:
-      platform: factory_reset
-      name: Restart with Factory Defaults
-      class: restart
-
-<<: !include settings.yaml
-
-captive_portal:
-
-sensor:
-  - platform: wifi_signal
-    name: "${device_name} WiFi Signal"
-    update_interval: 60s
-    accuracy_decimals: 0
-    entity_category: diagnostic
-  - platform: uptime
-    name: "${device_name} Uptime"
-    unit_of_measurement: days
-    update_interval: 300s
-    accuracy_decimals: 1
-    entity_category: diagnostic
-    filters:
-      - multiply: 0.000011574
-
-button:
-  - id: !extend factory_reset_button
-    disabled_by_default: true
 
 binary_sensor:
   - platform: status
@@ -72,19 +21,10 @@ text_sensor:
     name: "${device_name} ESPHome Version"
     entity_category: diagnostic
   - platform: wifi_info
-    ip_address:
-      name: "${device_name} IP"
-      entity_category: diagnostic
-    ssid:
-      name: "${device_name} SSID"
-      entity_category: diagnostic
     bssid:
       name: "${device_name} BSSID"
       entity_category: diagnostic
       disabled_by_default: true
-    mac_address:
-      name: "${device_name} MAC Address"
-      entity_category: diagnostic
     scan_results:
       name: "${device_name} Scan Results"
       entity_category: diagnostic
