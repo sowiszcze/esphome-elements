@@ -6,15 +6,15 @@ packages:
       touchpad_pin: GPIO0
       relay_pin: GPIO12
       button_uid: left
-  switch_03: !include
-    file: device-components/sonoff-t1eu.button.yaml
-    vars:
-      touchpad_pin: GPIO10
-      relay_pin: GPIO4
-      button_uid: middle
   switch_02: !include
     file: device-components/sonoff-t1eu.button.yaml
     vars:
       touchpad_pin: GPIO9
       relay_pin: GPIO5
+      button_uid: middle
+  switch_03: !include
+    file: device-components/sonoff-t1eu.button.yaml
+    vars:
+      touchpad_pin: GPIO10
+      relay_pin: GPIO4
       button_uid: right
