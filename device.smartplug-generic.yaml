@@ -1,3 +1,15 @@
+esphome:
+  comment: >
+    ESPHome software for generic smartplugs with power meters.
+    Works with Gosund SP111 and BlitzWolf® BW-SHP6 Pro 15A.
+  project:
+    name: "sowitech.generic_smartplug"
+    version: "1.0"
+
+esp8266:
+  board: esp8285
+  restore_from_flash: true
+
 packages:
   smartplug_generic: !include
     file: device.smartplug.base.yaml
