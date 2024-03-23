@@ -1,3 +1,5 @@
+# Based on https://devices.esphome.io/devices/Sonoff-Mini-Relay
+# Flashing: https://community.home-assistant.io/t/flash-sonoff-minir2-firmware-3-6-0-with-esphome-over-the-air/311042/2
 esphome:
   comment: ESPHome software for Sonoff Mini R2 relays
   project:
@@ -5,11 +7,11 @@ esphome:
     version: "1.0"
 
 esp8266:
-  board: esp01_1m
+  board: esp8285
   restore_from_flash: true
 
 packages:
-  base: !include device.base.yaml
+  base: !include device.base.min.yaml
   logger_off: !include components/logger.disabled-uart.yaml
   status_led: !include
     file: components/esp8266-pwm.status-led.yaml
@@ -20,22 +22,21 @@ packages:
     file: components/button.multifunction.yaml
     vars:
       button_pin: GPIO00
-      relay_id: relay
+      relay_id: relay_0
+  relay: !include
+    file: components/switch.relay.yaml
+    vars:
+      button_uid: 0
+      relay_pin: 12
+
 
 binary_sensor:
   - platform: gpio
     name: Switch
-    pin: GPIO04
+    pin: GPIO04 # External switch input marked S2, S1 is GND
     id: switch_input
     entity_category: diagnostic
     on_state:
       then:
         - switch.toggle:
-            id: relay
-
-switch:
-  - platform: gpio
-    name: Relay
-    pin: GPIO12
-    id: relay
-    restore_mode: RESTORE_DEFAULT_OFF
+            id: relay_0
