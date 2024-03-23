@@ -1,3 +1,10 @@
+packages:
+  relay: !include
+    file: ../components/switch.relay.yaml
+    vars:
+      button_uid: ${button_uid}
+      relay_pin: ${relay_pin}
+
 binary_sensor:
   - platform: gpio
     name: Touchpad ${button_uid}
@@ -11,10 +18,3 @@ binary_sensor:
       inverted: true
     on_press:
       - switch.toggle: relay_${button_uid}
-
-switch:
-  - platform: gpio
-    name: Relay ${button_uid}
-    id: relay_${button_uid}
-    pin: ${relay_pin}
-    restore_mode: RESTORE_DEFAULT_OFF
