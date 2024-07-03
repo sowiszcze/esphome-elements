@@ -1,0 +1,104 @@
+esp32:
+  board: esp32cam
+
+# https://github.com/raphaelbs/esp32-cam-ai-thinker/blob/master/docs/esp32cam-pin-notes.md
+packages:
+  base: !include device.base.yaml
+  logger_off: !include components/logger.disabled-uart.yaml
+  hass_time: !include components/general.hass-time.yaml
+
+# https://esphome.io/components/esp32_camera.html#configuration-examples
+# https://github.com/raphaelbs/esp32-cam-ai-thinker
+# https://hackaday.io/project/168563-7-esp32-cam-example-expanded
+esp32_camera:
+  id: cam
+  external_clock:
+    pin: GPIO0
+    frequency: 20MHz
+  i2c_pins:
+    sda: GPIO26
+    scl: GPIO27
+  data_pins: [GPIO5, GPIO18, GPIO19, GPIO21, GPIO36, GPIO39, GPIO34, GPIO35]
+  vsync_pin: GPIO25
+  href_pin: GPIO23
+  pixel_clock_pin: GPIO22
+  power_down_pin: GPIO32
+  name: Camera
+  max_framerate: 15 fps
+  idle_framerate: 0.5 fps
+  resolution: 800x600
+  jpeg_quality: 20
+  vertical_flip: false
+  horizontal_mirror: false
+  contrast: 0
+  brightness: 0
+  saturation: 0
+  aec_mode: auto
+  aec2: false
+  ae_level: 0
+  aec_value: 300
+  agc_mode: auto
+  agc_value: 0
+  agc_gain_ceiling: 2x
+  wb_mode: auto
+
+output:
+  - platform: ledc
+    pin: 4
+    id: light_output
+
+light:
+  - name: Onboard flash
+    output: light_output
+    platform: monochromatic
+    id: light_flash
+    restore_mode: RESTORE_DEFAULT_OFF
+
+number:
+  - platform: template
+    name: Quality
+    id: jpeg_quality
+    icon: mdi:camera-enhance
+    optimistic: true
+    min_value: 0
+    max_value: 100
+    step: 1
+    unit_of_measurement: "%"
+    entity_category: config
+    on_value:
+      then:
+        - lambda: !lambda |-
+            id(cam).set_jpeg_quality((int)((100 - x) / 53.0 + 10))
+
+select:
+  - platform: template
+    name: Resolution
+    id: resolution
+    icon: mdi:camera-control
+    optimistic: true
+    restore_value: true
+    options:
+      - 160x120
+      - 176x144
+      - 240x176
+      - 320x240
+      - 400x296
+      - 640x480
+      - 800x600
+      - 1024x768
+      - 1280x1024
+      - 1600x1200
+      - 1920x1080
+      - 720x1280
+      - 864x1536
+      - 2048x1536
+      - 2560x1440
+      - 2560x1600
+      - 1080x1920
+      - 2560x1920
+    initial_option: 800x600
+    entity_category: config
+    on_value:
+      then:
+        - lambda: !lambda |-
+            id(cam).set_frame_size(x)
