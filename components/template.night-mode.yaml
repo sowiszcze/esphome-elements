@@ -1,6 +1,0 @@
-switch:
-  # Creates `Night Mode` switch
-  - platform: template
-    name: Night Mode
-    id: night_mode
-    disabled_by_default: true
