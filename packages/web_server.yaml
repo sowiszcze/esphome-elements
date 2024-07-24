@@ -4,3 +4,4 @@ web_server:
     username: !secret web_user
     password: !secret web_pass
   include_internal: true
+  version: 3
